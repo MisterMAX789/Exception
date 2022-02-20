@@ -1,0 +1,47 @@
+package manager;
+
+import domain.Book;
+import domain.Product;
+import domain.Smartphone;
+import org.junit.jupiter.api.BeforeEach;
+import repository.ProductRepository;
+
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+
+
+class Test {
+
+        private final ProductRepository repository = new ProductRepository();
+        private final Book first = new Book(1, "Анна Каренина", 1000, "Толстой");
+        private final Book second = new Book(2, "Война и мир", 1100, "Толстой");
+        private final Book third = new Book(3, "Человек футляр", 800, "Чехов");
+        private final Smartphone fourth = new Smartphone(4, "Apple", 4100, "IND");
+        private final Smartphone fifth = new Smartphone(5, "Sony", 3300, "RTF");
+
+
+        @BeforeEach
+        public void setUp() {
+            repository.save(first);
+            repository.save(second);
+            repository.save(third);
+            repository.save(fourth);
+            repository.save(fifth);
+        }
+
+
+    @org.junit.jupiter.api.Test
+        public void shouldRemoveById() {
+            repository.removeById(1);
+            Product[] expected = { second, third, fourth, fifth};
+            Product[] actual = repository.findAll();
+            assertArrayEquals(expected, actual);
+
+    }
+
+    @org.junit.jupiter.api.Test
+    public void shouldRemoveById12() {
+        repository.save(first);
+        repository.removeById(1);
+    }
+
+}
